@@ -4,17 +4,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-
-
 class SecondScreen extends StatefulWidget {
   const SecondScreen({Key? key}) : super(key: key);
 
   @override
   State<SecondScreen> createState() => _SecondScreenState();
 }
-bool selected =false;
-class _SecondScreenState extends State<SecondScreen> {
 
+bool selected = false;
+
+class _SecondScreenState extends State<SecondScreen> {
   File? selectedImage;
   String base64Image = "";
 
@@ -36,18 +35,19 @@ class _SecondScreenState extends State<SecondScreen> {
       });
     }
   }
+
   DateTime date = DateTime.now();
   void ShowDate() {
     showDatePicker(
-        context: (context),
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1800),
-        lastDate: DateTime(2025)).then((value){
-          setState(() {
-            date = value!;
-          });
-    }
-    );
+            context: (context),
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1800),
+            lastDate: DateTime(2025))
+        .then((value) {
+      setState(() {
+        date = value!;
+      });
+    });
   }
 
   @override
@@ -73,7 +73,7 @@ class _SecondScreenState extends State<SecondScreen> {
               const FittedBox(
                   child: Text(
                 ""
-                    "Create An Account To Get Started",
+                "Create An Account To Get Started",
                 style: TextStyle(fontSize: 23, color: Colors.black45),
               )),
               const SizedBox(
@@ -91,9 +91,9 @@ class _SecondScreenState extends State<SecondScreen> {
                       value: 1,
                       groupValue: val,
                       onChanged: (value) {
-                     setState(() {
-                       val = value;
-                     });
+                        setState(() {
+                          val = value;
+                        });
                       },
                     ),
                     const SizedBox(
@@ -140,7 +140,7 @@ class _SecondScreenState extends State<SecondScreen> {
                     const Text("Other"),
                   ],
                 ),
-              ),  
+              ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -149,8 +149,9 @@ class _SecondScreenState extends State<SecondScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      selected?
-                      Text(date.day.toString()+" / " + date.month.toString()+" / " + date.year.toString()):Text("Date of Birth"),
+                      selected
+                          ? Text("${date.day} / ${date.month} / ${date.year}")
+                          : const Text("Date of Birth"),
                       IconButton(
                           onPressed: () {
                             selected = true;
@@ -170,25 +171,28 @@ class _SecondScreenState extends State<SecondScreen> {
                   keyboardType: TextInputType.text,
                   textAlign: TextAlign.start,
                   decoration: InputDecoration(
-                      labelText: "Personal PAN Number",
+                    labelText: "Personal PAN Number",
 
                     //hintTextDirection: TextDirection.rtl,
                   ),
                 ),
               ),
-
-             Card(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:[
-                    const Text('Personal PAN Photo'),
-                    TextButton(onPressed: (){
-                      showModalBottomSheet(context: context, builder: ((builder)=> BottomSheet()),);
-                       //Navigator.pushReplacement((context), CupertinoPageRoute(builder: (context)=> ImagePickerScreen() ));
-                    }, child:const Text("Upload") )
-                  ],
-                )
-              ),
+              Card(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Personal PAN Photo'),
+                  TextButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: ((builder) => BottomSheet()),
+                        );
+                        //Navigator.pushReplacement((context), CupertinoPageRoute(builder: (context)=> ImagePickerScreen() ));
+                      },
+                      child: const Text("Upload"))
+                ],
+              )),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: TextField(
@@ -204,23 +208,25 @@ class _SecondScreenState extends State<SecondScreen> {
                   ),
                 ),
               ),
-
               Card(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:[
-                      const Text('Personal Adhaar Photo'),
-                      TextButton(onPressed: (){
-
-                        showModalBottomSheet(context: context, builder: ((builder)=> BottomSheet()),);
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Personal Adhaar Photo'),
+                  TextButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: ((builder) => BottomSheet()),
+                        );
                         //Navigator.pushReplacement((context), CupertinoPageRoute(builder: (context)=> ImagePickerScreen() ));
-
-                      }, child:const Text("Upload") )
-                    ],
-                  )
+                      },
+                      child: const Text("Upload"))
+                ],
+              )),
+              const SizedBox(
+                height: 40,
               ),
-
-           const   SizedBox(height: 40,),
               ElevatedButton(
                   onPressed: () {},
                   child: Container(
@@ -239,21 +245,23 @@ class _SecondScreenState extends State<SecondScreen> {
       ),
     );
   }
-  Widget BottomSheet(){
+
+  Widget BottomSheet() {
     return Container(
       height: 100,
       width: MediaQuery.of(context).size.width,
-      margin:  const EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         horizontal: 20,
         vertical: 20,
-
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text('Select Image'),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -261,10 +269,12 @@ class _SecondScreenState extends State<SecondScreen> {
                 onPressed: () async {
                   chooseImage("camera");
                   Navigator.of(context).pop();
-                }, child: const Text("Open Camera"),
-
+                },
+                child: const Text("Open Camera"),
               ),
-              const SizedBox(width: 30,),
+              const SizedBox(
+                width: 30,
+              ),
               ElevatedButton(
                   onPressed: () async {
                     chooseImage("gallery");
@@ -276,6 +286,5 @@ class _SecondScreenState extends State<SecondScreen> {
         ],
       ),
     );
-
   }
 }
